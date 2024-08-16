@@ -141,14 +141,6 @@ public class TournamentManager {
         }
 
 
-//        @Override
-//        public String toString() {
-//            return "TournamentPlayer{" +
-//                    "player=" + player +
-//                    ", score=" + score +
-//                    ", plus=" + plus +
-//                    '}';
-//        }
     }
 
 

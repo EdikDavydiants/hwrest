@@ -128,29 +128,6 @@ public class Game {
         return tour;
     }
 
-//    @Override
-//    public String toString() {
-//        if (playerW == null) {
-//            return "Game{" +
-//                    "id=" + id +
-//                    ", whiteId=" + whiteId +
-//                    ", blackId=" + blackId +
-//                    ", result=" + result +
-//                    ", tournamentId=" + tournamentId +
-//                    ", tour=" + tour +
-//                    '}';
-//        } else {
-//            return "Game{" +
-//                    "id=" + id +
-//                    ", whiteId=" + getWhiteId() +
-//                    ", blackId=" + getBlackId() +
-//                    ", result=" + result +
-//                    ", tournamentId=" + tournamentId +
-//                    ", tour=" + tour +
-//                    '}';
-//        }
-//    }
-
     public String htmlFormString() {
         return id + "   " + whiteId + " " + blackId + "  "
                 + result + "  " + tournamentId + "  " + tour + "<br>";

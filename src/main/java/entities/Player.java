@@ -29,18 +29,6 @@ public class Player {
         return id + "   " + firstName + " " + lastName + "  " + elo + "<br>";
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "Player{" +
-//                "id=" + id +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", elo=" + elo +
-//                '}';
-//    }
-
-
     public int getId() {
         return id;
     }

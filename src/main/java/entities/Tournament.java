@@ -27,14 +27,6 @@ public class Tournament {
         return name;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Tournament{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                '}';
-//    }
-
     public String htmlFormString() {
         return id + "   " + name + "<br>";
     }
