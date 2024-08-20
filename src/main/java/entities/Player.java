@@ -1,6 +1,7 @@
 package entities;
 
 
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -8,13 +9,15 @@ public class Player {
     private final String firstName;
     private final String lastName;
     private int elo;
+    private List<Game> gameList;
 
 
-    public Player(int id, String firstName, String lastName, int elo) {
+    public Player(int id, String firstName, String lastName, int elo, List<Game> gameList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.elo = elo;
+        this.gameList = gameList;
     }
 
 

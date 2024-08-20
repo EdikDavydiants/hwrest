@@ -26,7 +26,7 @@ public class FileUtils {
                         forEach(line -> {
                             String[] strArr = line.split(" ");
                             if (strArr.length == 2) {
-                                Player player = new Player(playerList.size(), strArr[0], strArr[1], 0);
+                                Player player = new Player(playerList.size(), strArr[0], strArr[1], 0, null);
                                 player.generateElo(random);
                                 playerList.add(player);
                             }

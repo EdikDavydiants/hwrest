@@ -1,5 +1,6 @@
 package repository;
 
+import entities.Game;
 import entities.Tournament;
 
 import java.sql.Connection;
@@ -52,8 +53,8 @@ public class TournamentsDAO {
             while (rs.next()) {
                 int id = rs.getInt(id_str);
                 String name = rs.getString(name_str);
-
-                tournamentList.add(new Tournament(id, name));
+                List<Game> gameList = DBUtils.getGamesDAO().getAllTournamentGames(id);
+                tournamentList.add(new Tournament(id, name, gameList));
             }
         }
         return tournamentList;

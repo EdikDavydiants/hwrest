@@ -1,5 +1,6 @@
 package repository;
 
+import entities.Game;
 import entities.Player;
 
 import java.sql.*;
@@ -38,8 +39,7 @@ public class PlayersDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TABLE)) {
             preparedStatement.execute();
         }
-        Player player = getPlayerById(0);
-        if (player == null) {
+        if (getPlayerById(0) == null) {
             DBUtils.getPlayersDAO().createPlayers(FileUtils.createPlayerList());
         }
     }
@@ -49,7 +49,7 @@ public class PlayersDAO {
         List<Player> playerList;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_PLAYERS)) {
             ResultSet rs = preparedStatement.executeQuery();
-            playerList = extractPlayers(rs);
+            playerList = extractPlayers(rs, false);
         }
         return playerList;
     }
@@ -59,7 +59,7 @@ public class PlayersDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PLAYER_BY_ID_QUERY)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            List<Player> players = extractPlayers(rs);
+            List<Player> players = extractPlayers(rs, true);
             if (players.size() == 1) {
                 return players.get(0);
             }
@@ -73,7 +73,7 @@ public class PlayersDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PLAYER_BY_LAST_NAME_QUERY)) {
             preparedStatement.setString(1, lastName);
             ResultSet rs = preparedStatement.executeQuery();
-            players = extractPlayers(rs);
+            players = extractPlayers(rs, false);
         }
         return players;
     }
@@ -85,20 +85,26 @@ public class PlayersDAO {
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             ResultSet rs = preparedStatement.executeQuery();
-            players = extractPlayers(rs);
+            players = extractPlayers(rs, false);
         }
         return players;
     }
 
 
-    private List<Player> extractPlayers(ResultSet rs) throws SQLException{
+    private List<Player> extractPlayers(ResultSet rs, boolean withGames) throws SQLException{
         List<Player> players = new ArrayList<>();
         while (rs.next()) {
             int id = rs.getInt(id_str);
             String firstName = rs.getString(first_name_str);
             String lastName = rs.getString(last_name_str);
             int elo = rs.getInt(elo_str);
-            players.add(new Player(id, firstName, lastName, elo));
+            if (withGames) {
+                List<Game> gameList = DBUtils.getGamesDAO().getAllPlayerGames(id);
+                players.add(new Player(id, firstName, lastName, elo, gameList));
+            } else {
+                players.add(new Player(id, firstName, lastName, elo, null));
+            }
+
         }
         return players;
     }
@@ -124,8 +130,7 @@ public class PlayersDAO {
     public void createPlayers(List<Player> playerList) throws SQLException  {
         int id = getMaxId();
         for (Player player: playerList) {
-            id++;
-            savePlayer(player, id);
+            savePlayer(player, ++id);
         }
     }
 

@@ -30,7 +30,6 @@ public class GamesDAO {
     private final static String GET_ALL_TOUR_GAMES_OF_TOURNAMENT_QUERY = "SELECT * FROM " + table_name +
             " WHERE " + tournament_id_str + " = ? AND " + tour_str + " = ?";
     private final static String CREATE_GAME_QUERY = "INSERT INTO " + table_name + " VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String DELETE_GAME_QUERY = "DELETE FROM " + table_name + " WHERE " + id_str + " = ?";
     private final static String MAX_ID_QUERY = "SELECT * FROM "+ table_name +" WHERE " + id_str + " = ( SELECT MAX(" + id_str + ") FROM "+ table_name +" )";
 
     private final Connection connection;
@@ -112,13 +111,6 @@ public class GamesDAO {
         return gameList;
     }
 
-
-    public void deleteGame(int id) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GAME_QUERY)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        }
-    }
 
     public int getMaxId() throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(MAX_ID_QUERY)) {
