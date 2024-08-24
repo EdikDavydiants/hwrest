@@ -1,8 +1,7 @@
-package servlets;
+package controller;
 
 import repository.DBUtils;
-import entities.Player;
-import servlets.ServletStrings;
+import model.entities.Player;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-
 
 @WebServlet("/updateplayer")
 public class UpdatePlayerServlet extends HttpServlet {
@@ -52,6 +50,4 @@ public class UpdatePlayerServlet extends HttpServlet {
             printWriter.close();
         }
     }
-
-
 }

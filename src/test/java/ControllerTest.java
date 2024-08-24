@@ -1,18 +1,18 @@
-import businesslogic.TournamentManager;
-import entities.Player;
+import service.TournamentService;
+import model.entities.Player;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.testcontainers.containers.PostgreSQLContainer;
 import repository.DBUtils;
-import servlets.ServletStrings;
-import servlets.StartServlet;
-import servlets.CreatePlayerServlet;
-import servlets.GetGamesServlet;
-import servlets.GetPlayerServlet;
-import servlets.UpdatePlayerServlet;
-import servlets.GetTournamentsServlet;
-import servlets.RunTournamentServlet;
+import controller.ServletStrings;
+import controller.StartServlet;
+import controller.CreatePlayerServlet;
+import controller.GetGamesServlet;
+import controller.GetPlayerServlet;
+import controller.UpdatePlayerServlet;
+import controller.GetTournamentsServlet;
+import controller.RunTournamentServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +28,9 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class ServletsTest {
+public class ControllerTest {
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
-
 
     @BeforeAll
     static void beforeAll() {
@@ -47,7 +46,6 @@ public class ServletsTest {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @AfterAll
@@ -385,7 +383,7 @@ public class ServletsTest {
         HttpServletResponse responseMock = Mockito.mock(HttpServletResponse.class);
 
 
-        /*  */
+        /* Получение всех игр игрока */
         PrintWriterTesting printWriterTest1 = Mockito.spy(new PrintWriterTesting(new StringWriter()));
         Mockito.when(responseMock.getWriter()).thenReturn(printWriterTest1);
 
@@ -399,7 +397,7 @@ public class ServletsTest {
         Mockito.verify(printWriterTest1, Mockito.times(1 + gameSize)).write(Mockito.anyString());
 
 
-        /*  */
+        /* Получение всехх игр турнира */
         PrintWriterTesting printWriterTest2 = Mockito.spy(new PrintWriterTesting(new StringWriter()));
         Mockito.when(responseMock.getWriter()).thenReturn(printWriterTest2);
 
@@ -413,7 +411,7 @@ public class ServletsTest {
         Mockito.verify(printWriterTest2, Mockito.times(1 + gameSize)).write(Mockito.anyString());
 
 
-        /*  */
+        /* Получение всех игр тура турнира */
         PrintWriterTesting printWriterTest3 = Mockito.spy(new PrintWriterTesting(new StringWriter()));
         Mockito.when(responseMock.getWriter()).thenReturn(printWriterTest3);
 
@@ -425,10 +423,7 @@ public class ServletsTest {
 
         gameSize = DBUtils.getGamesDAO().getAllTourGamesOfTournament(0, 0).size();
         Mockito.verify(printWriterTest3, Mockito.times(1 + gameSize)).write(Mockito.anyString());
-
     }
-
-    
 
     private static void createTables() throws SQLException {
         DBUtils.getTournamentsDAO().createTableIfNotExists();
@@ -439,31 +434,29 @@ public class ServletsTest {
     private static void createTournaments() throws SQLException {
         List<Player> playerList = DBUtils.getPlayersDAO().getAllPlayers();
 
-        List<TournamentManager.Competition> competitions2010 = new ArrayList<>();
-        List<TournamentManager.Competition> competitions2015 = new ArrayList<>();
-        List<TournamentManager.Competition> competitions2020 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2010 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2015 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2020 = new ArrayList<>();
 
-        competitions2010.add(TournamentManager.runBigTournament(playerList, "Big Cup 2010", 9));
-        competitions2010.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2010", 7));
-        competitions2010.add(TournamentManager.runGMTournament(playerList, "GM Cup 2010", 7));
-        competitions2010.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2010", 9));
+        competitions2010.add(TournamentService.runBigTournament(playerList, "Big Cup 2010", 9));
+        competitions2010.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2010", 7));
+        competitions2010.add(TournamentService.runGMTournament(playerList, "GM Cup 2010", 7));
+        competitions2010.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2010", 9));
 
-        competitions2015.add(TournamentManager.runBigTournament(playerList, "Big Cup 2015", 9));
-        competitions2015.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2015", 7));
-        competitions2015.add(TournamentManager.runGMTournament(playerList, "GM Cup 2015", 7));
-        competitions2015.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2015", 9));
+        competitions2015.add(TournamentService.runBigTournament(playerList, "Big Cup 2015", 9));
+        competitions2015.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2015", 7));
+        competitions2015.add(TournamentService.runGMTournament(playerList, "GM Cup 2015", 7));
+        competitions2015.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2015", 9));
 
-        competitions2020.add(TournamentManager.runBigTournament(playerList, "Big Cup 2020", 9));
-        competitions2020.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2020", 7));
-        competitions2020.add(TournamentManager.runGMTournament(playerList, "GM Cup 2020", 7));
-        competitions2020.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2020", 9));
+        competitions2020.add(TournamentService.runBigTournament(playerList, "Big Cup 2020", 9));
+        competitions2020.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2020", 7));
+        competitions2020.add(TournamentService.runGMTournament(playerList, "GM Cup 2020", 7));
+        competitions2020.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2020", 9));
 
-        TournamentManager.saveCompetitions(competitions2010, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
-        TournamentManager.saveCompetitions(competitions2015, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
-        TournamentManager.saveCompetitions(competitions2020, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2010, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2015, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2020, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
     }
-
-
 
 
     public static class PrintWriterTesting extends PrintWriter {

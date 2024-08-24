@@ -1,8 +1,7 @@
-package servlets;
+package controller;
 
-import entities.Game;
+import model.entities.Game;
 import repository.DBUtils;
-import servlets.ServletStrings;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,8 +62,5 @@ public class GetGamesServlet extends HttpServlet {
             printWriter.write(ServletStrings.DB_ERROR);
             printWriter.close();
         }
-
     }
-
-
 }

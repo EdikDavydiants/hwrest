@@ -1,8 +1,7 @@
-package servlets;
+package controller;
 
-import entities.Tournament;
+import model.entities.Tournament;
 import repository.DBUtils;
-import servlets.ServletStrings;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,6 +36,4 @@ public class GetTournamentsServlet extends HttpServlet {
 
         printWriter.close();
     }
-
-
 }

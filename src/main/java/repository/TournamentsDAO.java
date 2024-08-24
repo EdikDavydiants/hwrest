@@ -1,7 +1,7 @@
 package repository;
 
-import entities.Game;
-import entities.Tournament;
+import model.entities.Game;
+import model.entities.Tournament;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,6 +69,5 @@ public class TournamentsDAO {
         }
         return -1;
     }
-
 
 }

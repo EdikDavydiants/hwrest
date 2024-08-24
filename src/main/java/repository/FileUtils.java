@@ -1,6 +1,6 @@
 package repository;
 
-import entities.Player;
+import model.entities.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,8 +1,7 @@
-package servlets;
+package controller;
 
 import repository.DBUtils;
-import entities.Player;
-import servlets.ServletStrings;
+import model.entities.Player;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,8 +65,5 @@ public class GetPlayerServlet extends HttpServlet {
             printWriter.write(ServletStrings.DB_ERROR);
             printWriter.close();
         }
-
     }
-
-
 }

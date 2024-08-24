@@ -1,4 +1,4 @@
-package servlets;
+package controller;
 
 import repository.DBUtils;
 
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-
 
 @WebServlet("/start")
 public class StartServlet extends HttpServlet {
@@ -44,9 +43,6 @@ public class StartServlet extends HttpServlet {
         } else {
             printWriter.write(ALREADY_CONNECTED);
         }
-
         printWriter.close();
     }
-
-
 }

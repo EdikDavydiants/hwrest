@@ -1,14 +1,14 @@
-package entities;
+package model.entities;
 
 
-import businesslogic.TournamentManager;
+import service.TournamentService;
 
 import java.util.Random;
 
 public class Game {
     private int id;
-    private TournamentManager.TournamentPlayer playerW;
-    private TournamentManager.TournamentPlayer playerB;
+    private TournamentService.TournamentPlayer playerW;
+    private TournamentService.TournamentPlayer playerB;
     private int whiteId;
     private int blackId;
     private int result;
@@ -16,7 +16,7 @@ public class Game {
     private int tour;
 
 
-    public Game(TournamentManager.TournamentPlayer playerW, TournamentManager.TournamentPlayer playerB, int tour) {
+    public Game(TournamentService.TournamentPlayer playerW, TournamentService.TournamentPlayer playerB, int tour) {
         this.playerW = playerW;
         this.playerB = playerB;
         this.tour = tour;
@@ -32,7 +32,6 @@ public class Game {
     }
 
 
-
     public Game playGame() {
         int result = createResult();
         if (result == 0) {
@@ -46,7 +45,6 @@ public class Game {
         this.result = result;
         return this;
     }
-
 
     private int createResult() {
         Random random = new Random();
@@ -83,7 +81,6 @@ public class Game {
         }
     }
 
-
     public int bounds(float bound1, float bound2, Random random) {
         float rand = random.nextFloat();
         if (rand < bound1) {
@@ -94,7 +91,6 @@ public class Game {
             return 2;
         }
     }
-
 
     public int getId() {
         return id;

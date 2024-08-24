@@ -1,7 +1,7 @@
-package servlets;
+package controller;
 
-import entities.Player;
-import businesslogic.TournamentManager;
+import model.entities.Player;
+import service.TournamentService;
 import repository.DBUtils;
 
 import javax.servlet.ServletException;
@@ -32,26 +32,26 @@ public class RunTournamentServlet extends HttpServlet {
         if(ServletStrings.areParamNamesCorrect(tournamentNameReq, tournamentTypeReq)) {
             try {
                 List<Player> allPlayerList = DBUtils.getPlayersDAO().getAllPlayers();
-                TournamentManager.Competition competition;
+                TournamentService.Competition competition;
                 switch (tournamentTypeReq) {
                     case ELITE_PARAM:
-                        competition = TournamentManager.runEliteTournament(allPlayerList, tournamentNameReq, 7);
+                        competition = TournamentService.runEliteTournament(allPlayerList, tournamentNameReq, 7);
                         break;
                     case GM_PARAM:
-                        competition = TournamentManager.runGMTournament(allPlayerList, tournamentNameReq, 7);
+                        competition = TournamentService.runGMTournament(allPlayerList, tournamentNameReq, 7);
                         break;
                     case BIG_PARAM:
-                        competition = TournamentManager.runBigTournament(allPlayerList, tournamentNameReq, 9);
+                        competition = TournamentService.runBigTournament(allPlayerList, tournamentNameReq, 9);
                         break;
                     case BEGINNERS_PARAM:
-                        competition = TournamentManager.runBeginnersTournament(allPlayerList, tournamentNameReq, 9);
+                        competition = TournamentService.runBeginnersTournament(allPlayerList, tournamentNameReq, 9);
                         break;
                     default:
                         printWriter.write(ServletStrings.INCORRECT_PARAMETERS);
                         printWriter.close();
                         return;
                 }
-                TournamentManager.saveCompetitions(List.of(competition), DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+                TournamentService.saveCompetitions(List.of(competition), DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
                 printWriter.write(RunTournamentServlet.SUCCESS);
             }
             catch (SQLException e) {
@@ -60,8 +60,5 @@ public class RunTournamentServlet extends HttpServlet {
         } else {
             printWriter.write(ServletStrings.INCORRECT_REQUEST);
         }
-
     }
-
-
 }

@@ -1,7 +1,7 @@
-import entities.Game;
-import entities.Player;
-import entities.Tournament;
-import businesslogic.TournamentManager;
+import model.entities.Game;
+import model.entities.Player;
+import model.entities.Tournament;
+import service.TournamentService;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.PostgreSQLContainer;
 import repository.*;
@@ -14,9 +14,8 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class DAOTest {
+class RepositoryTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
-
 
     @BeforeAll
     static void beforeAll() {
@@ -32,7 +31,6 @@ class DAOTest {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @AfterAll
@@ -199,28 +197,28 @@ class DAOTest {
     private static void createTournaments() throws SQLException {
         List<Player> playerList = DBUtils.getPlayersDAO().getAllPlayers();
 
-        List<TournamentManager.Competition> competitions2010 = new ArrayList<>();
-        List<TournamentManager.Competition> competitions2015 = new ArrayList<>();
-        List<TournamentManager.Competition> competitions2020 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2010 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2015 = new ArrayList<>();
+        List<TournamentService.Competition> competitions2020 = new ArrayList<>();
 
-        competitions2010.add(TournamentManager.runBigTournament(playerList, "Big Cup 2010", 9));
-        competitions2010.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2010", 7));
-        competitions2010.add(TournamentManager.runGMTournament(playerList, "GM Cup 2010", 7));
-        competitions2010.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2010", 9));
+        competitions2010.add(TournamentService.runBigTournament(playerList, "Big Cup 2010", 9));
+        competitions2010.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2010", 7));
+        competitions2010.add(TournamentService.runGMTournament(playerList, "GM Cup 2010", 7));
+        competitions2010.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2010", 9));
 
-        competitions2015.add(TournamentManager.runBigTournament(playerList, "Big Cup 2015", 9));
-        competitions2015.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2015", 7));
-        competitions2015.add(TournamentManager.runGMTournament(playerList, "GM Cup 2015", 7));
-        competitions2015.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2015", 9));
+        competitions2015.add(TournamentService.runBigTournament(playerList, "Big Cup 2015", 9));
+        competitions2015.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2015", 7));
+        competitions2015.add(TournamentService.runGMTournament(playerList, "GM Cup 2015", 7));
+        competitions2015.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2015", 9));
 
-        competitions2020.add(TournamentManager.runBigTournament(playerList, "Big Cup 2020", 9));
-        competitions2020.add(TournamentManager.runEliteTournament(playerList, "Elite Cup 2020", 7));
-        competitions2020.add(TournamentManager.runGMTournament(playerList, "GM Cup 2020", 7));
-        competitions2020.add(TournamentManager.runBeginnersTournament(playerList, "Beginners Cup 2020", 9));
+        competitions2020.add(TournamentService.runBigTournament(playerList, "Big Cup 2020", 9));
+        competitions2020.add(TournamentService.runEliteTournament(playerList, "Elite Cup 2020", 7));
+        competitions2020.add(TournamentService.runGMTournament(playerList, "GM Cup 2020", 7));
+        competitions2020.add(TournamentService.runBeginnersTournament(playerList, "Beginners Cup 2020", 9));
 
-        TournamentManager.saveCompetitions(competitions2010, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
-        TournamentManager.saveCompetitions(competitions2015, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
-        TournamentManager.saveCompetitions(competitions2020, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2010, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2015, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
+        TournamentService.saveCompetitions(competitions2020, DBUtils.getTournamentsDAO(), DBUtils.getGamesDAO());
     }
 
 

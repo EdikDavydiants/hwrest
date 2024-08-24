@@ -1,6 +1,6 @@
 package repository;
 
-import entities.Game;
+import model.entities.Game;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,7 +46,6 @@ public class GamesDAO {
         }
     }
 
-
     public void saveGames(List<Game> gameList) throws SQLException {
         for (Game game: gameList) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_GAME_QUERY)) {
@@ -60,7 +59,6 @@ public class GamesDAO {
             }
         }
     }
-
 
     private List<Game> extractGames(ResultSet rs) throws SQLException {
         List<Game> games = new ArrayList<>();
@@ -76,7 +74,6 @@ public class GamesDAO {
         return games;
     }
 
-
     public List<Game> getAllPlayerGames(int playerId) throws SQLException {
         List<Game> gameList;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_PLAYER_GAMES_QUERY)) {
@@ -88,7 +85,6 @@ public class GamesDAO {
         return gameList;
     }
 
-
     public List<Game> getAllTournamentGames(int tournamentId) throws SQLException {
         List<Game> gameList;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TOURNAMENT_GAMES_QUERY)) {
@@ -98,7 +94,6 @@ public class GamesDAO {
         }
         return gameList;
     }
-
 
     public List<Game> getAllTourGamesOfTournament(int tournamentId, int tourNumber) throws SQLException {
         List<Game> gameList;
@@ -111,7 +106,6 @@ public class GamesDAO {
         return gameList;
     }
 
-
     public int getMaxId() throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(MAX_ID_QUERY)) {
             ResultSet rs = preparedStatement.executeQuery();
@@ -121,6 +115,4 @@ public class GamesDAO {
         }
         return -1;
     }
-
-
 }

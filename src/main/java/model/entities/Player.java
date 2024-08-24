@@ -1,4 +1,4 @@
-package entities;
+package model.entities;
 
 
 import java.util.List;
@@ -19,7 +19,6 @@ public class Player {
         this.elo = elo;
         this.gameList = gameList;
     }
-
 
     public Player(String firstName, String lastName, int elo) {
         this.firstName = firstName;
@@ -48,7 +47,6 @@ public class Player {
         return elo;
     }
 
-
     public void generateElo(Random random) {
         float rand = random.nextFloat();
 
@@ -76,8 +74,4 @@ public class Player {
         }
     }
 
-
-
 }
-
-

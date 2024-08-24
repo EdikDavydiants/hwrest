@@ -1,8 +1,8 @@
-package businesslogic;
+package service;
 
-import entities.Game;
-import entities.Player;
-import entities.Tournament;
+import model.entities.Game;
+import model.entities.Player;
+import model.entities.Tournament;
 import repository.GamesDAO;
 import repository.TournamentsDAO;
 
@@ -12,8 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class TournamentManager {
-
+public class TournamentService {
 
     public static void saveCompetitions(List<Competition> competitions, TournamentsDAO tournamentsDAO,
                                         GamesDAO gamesDAO) throws SQLException {
@@ -113,8 +112,6 @@ public class TournamentManager {
     }
 
 
-
-
     public static class TournamentPlayer {
         private final Player player;
         private int score = 0;
@@ -139,11 +136,7 @@ public class TournamentManager {
         public Player getPlayer() {
             return player;
         }
-
-
     }
-
-
 
 
     public static class Tour {
@@ -173,8 +166,6 @@ public class TournamentManager {
     }
 
 
-
-
     public static class Competition {
         private final Tournament tournament;
         private final Tour[] tours;
@@ -201,7 +192,4 @@ public class TournamentManager {
             return tournament;
         }
     }
-
-
-
 }

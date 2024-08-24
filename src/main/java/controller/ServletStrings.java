@@ -1,4 +1,4 @@
-package servlets;
+package controller;
 
 import java.io.PrintWriter;
 
@@ -41,5 +41,4 @@ public class ServletStrings {
         }
         return playerId;
     }
-
 }

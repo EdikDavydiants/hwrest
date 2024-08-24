@@ -1,7 +1,7 @@
 package repository;
 
-import entities.Game;
-import entities.Player;
+import model.entities.Game;
+import model.entities.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,7 +44,6 @@ public class PlayersDAO {
         }
     }
 
-
     public List<Player> getAllPlayers() throws SQLException {
         List<Player> playerList;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_PLAYERS)) {
@@ -53,7 +52,6 @@ public class PlayersDAO {
         }
         return playerList;
     }
-
 
     public Player getPlayerById(int id) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PLAYER_BY_ID_QUERY)) {
@@ -67,7 +65,6 @@ public class PlayersDAO {
         return null;
     }
 
-
     public List<Player> getPlayersByLastName(String lastName) throws SQLException {
         List<Player> players;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PLAYER_BY_LAST_NAME_QUERY)) {
@@ -77,7 +74,6 @@ public class PlayersDAO {
         }
         return players;
     }
-
 
     public List<Player> getPlayersByFullName(String firstName, String lastName) throws SQLException {
         List<Player> players;
@@ -89,7 +85,6 @@ public class PlayersDAO {
         }
         return players;
     }
-
 
     private List<Player> extractPlayers(ResultSet rs, boolean withGames) throws SQLException{
         List<Player> players = new ArrayList<>();
@@ -104,11 +99,9 @@ public class PlayersDAO {
             } else {
                 players.add(new Player(id, firstName, lastName, elo, null));
             }
-
         }
         return players;
     }
-
 
     private void savePlayer(Player player, int id) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_PLAYER_QUERY)) {
@@ -120,12 +113,10 @@ public class PlayersDAO {
         }
     }
 
-
     public void createPlayer(Player player) throws SQLException {
         int id = getMaxId() + 1;
         savePlayer(player, id);
     }
-
 
     public void createPlayers(List<Player> playerList) throws SQLException  {
         int id = getMaxId();
@@ -134,7 +125,6 @@ public class PlayersDAO {
         }
     }
 
-
     public void updatePlayer(int id, int newElo) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PLAYER_QUERY)) {
             preparedStatement.setInt(1, newElo);
@@ -142,7 +132,6 @@ public class PlayersDAO {
             preparedStatement.executeUpdate();
         }
     }
-
 
     public int getMaxId() throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(MAX_ID_QUERY)) {
